@@ -35,6 +35,7 @@ namespace EventManagement.Controllers
         {
             return View();
         }
+        //tue ngu nhu bo
         public IActionResult UserCheck()
         {
             return View();
