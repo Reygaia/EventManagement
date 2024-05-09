@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 
 namespace EventManagement.Controllers
 {
@@ -23,7 +24,7 @@ namespace EventManagement.Controllers
 
         [HttpPost]
         [Route("add")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         public async Task<IActionResult> CreateEvents([FromBody] EventDTO input)
         {
             var user = _HttpContextAccessor.HttpContext.User;
@@ -51,6 +52,20 @@ namespace EventManagement.Controllers
                 }
             }
             return Ok(new { message = "Event created with some tasks" });
+        }
+
+        [HttpGet]
+        [Route("all")]
+        [Authorize]
+        public ActionResult<IEnumerable<BaseTask>> GetAllEvent()
+        {
+            var listOfEvents = _unitOfWork.BaseTaskRepository.GetAll();
+
+            return Ok(new
+            {
+                message = "Api call success",
+                data = listOfEvents
+            });
         }
     }
 }

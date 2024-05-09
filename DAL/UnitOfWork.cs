@@ -20,6 +20,7 @@ namespace DAL
         private BaseRepository<CheckTask> _checkTaskRepository;
         private BaseRepository<CountTask> _countTaskRepository;
         private BaseRepository<Event> _eventRepository;
+        private BaseRepository<BaseTask> _baseTaskRepository;
         public UnitOfWork(IConfiguration configuration, string databaseName)
         {
             _context = new Context(configuration.GetConnectionString("MongoDB"), databaseName);
@@ -58,6 +59,17 @@ namespace DAL
                     _eventRepository = new BaseRepository<Event>(_context, "events");
                 }
                 return _eventRepository;
+            }
+        }
+        public BaseRepository<BaseTask> BaseTaskRepository
+        {
+            get
+            {
+                if (this._baseTaskRepository == null)
+                {
+                    _baseTaskRepository = new BaseRepository<BaseTask>(_context, "events");
+                }
+                return _baseTaskRepository;
             }
         }
 
