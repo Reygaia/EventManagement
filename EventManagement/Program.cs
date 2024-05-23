@@ -1,7 +1,8 @@
 using AspNetCore.Identity.MongoDbCore.Extensions;
 using AspNetCore.Identity.MongoDbCore.Infrastructure;
 using DAL;
-using Entity;
+using Entity.Identity;
+using Entity.Task;
 using EventManagement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -70,6 +72,10 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddControllers().AddJsonOptions(_ =>
+{
+    _.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 //setup mongodbidentity 
 builder.Services.ConfigureMongoDbIdentity<ApplicationUser, ApplicationRole, Guid>(mongoDbIdentityConfig)
@@ -124,8 +130,15 @@ builder.Services.AddAuthentication(options =>
 var app = builder.Build();
 
 
+
 var databaseChecker = app.Services.GetRequiredService<DatabaseChecker>();
 databaseChecker.CheckConnection("EventManagement");
+
+BsonClassMap.RegisterClassMap<BaseTask>(classmap =>
+{
+    classmap.AutoMap();
+    classmap.MapExtraElementsMember(p => p.ExtraElements);
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
