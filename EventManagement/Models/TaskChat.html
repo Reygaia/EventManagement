@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task & Chat</title>
+    <link rel="stylesheet" href="../wwwroot/css/taskchat-style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tasks">
+            <div class="task-header">
+                <h2>Tasks</h2>
+            </div>
+            <div class="task-list">
+                <div class="task" data-task="task1">Task 1: Complete the project proposal</div>
+                <div class="task" data-task="task2">Task 2: Review the codebase</div>
+                <div class="task" data-task="task3">Task 3: Design the new feature</div>
+                <div class="task" data-task="task4">Task 4: Write unit tests</div>
+            </div>
+        </div>
+        <div class="chat">
+            <div class="chat-header" id="chat-title">Select a task to chat</div>
+            <div class="chat-messages" id="chat-messages"></div>
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Type your message...">
+                <button id="send-message-btn">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="../wwwroot/js/taskchat-js.js"></script>
+</body>
+</html>
