@@ -1,14 +1,12 @@
-﻿using Entity;
+﻿using Entity.Identity;
 using EventManagement.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualBasic;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 
@@ -22,7 +20,7 @@ namespace EventManagement.Controllers
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHttpContextAccessor _contextAccessor;
- /*       private readonly HttpClient _httpClient;*/
+        /*       private readonly HttpClient _httpClient;*/
 
         public AuthenticationController(UserManager<ApplicationUser> userManager,
                                         RoleManager<ApplicationRole> roleManager,

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entity
+namespace Entity.Identity
 {
     [CollectionName("roles")]
     public class ApplicationRole : MongoIdentityRole<Guid>
