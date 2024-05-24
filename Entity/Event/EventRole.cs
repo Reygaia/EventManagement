@@ -8,8 +8,12 @@ using System.Threading.Tasks;
 
 namespace Entity.Event
 {
-    public class EventRole
+    public class EventRole : Enumeration<EventRole>
     {
+        public EventRole(int value, string name) : base(value, name)
+        {
+        }
+
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }

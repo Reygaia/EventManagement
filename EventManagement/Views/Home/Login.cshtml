@@ -3,55 +3,45 @@
 @{
     ViewData["Title"] = "Login";
 }
-
-    <h2>Login</h2>
-    <form id="loginForm">
-        <div>
-            <label>Email:</label>
-            <input type="email" asp-for="Email" required />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <div>
-            <label>Password:</label>
-            <input type="password" asp-for="Password" required />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <button type="submit">Login</button>
-    </form>
+<form id="loginForm">
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <input type="email" id="Email" name="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="Password">Password:</label>
+        <input type="password" id="Password" name="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
 
     <script>
-        $(document).ready(function () {
-            $('#loginForm').submit(function (event) {
-                event.preventDefault();
+    $(document).ready(function () {
+        $('#loginForm').submit(function (event) {
+            event.preventDefault();
 
-                var formData = {
-                    email: $('#Email').val(),
-                    password: $('#Password').val()
-                };
+            var formData = {
+                email: $('#Email').val(),
+                password: $('#Password').val()
+            };
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/authenticate/login',
-                    contentType: 'application/json',
-                    data: JSON.stringify(formData),
-                    success: function (data) {
-                        /*console.log('Login Successful:', data);*/
-                        localStorage.setItem('accessToken', data.accessToken);
-                        // Handle successful login
-                    $.ajaxSetup({
-                        headers: {
-                            'Authorization': 'Bearer ' + data.accessToken
-                        }
-                    });
-                        console.log("Login Successfully");
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error:', error);
-                        // Handle error
-                    }
-                });
+            $.ajax({
+                type: 'POST',
+                url: '/api/authenticate/login',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (data) {
+                    /*console.log('Login Successful:', data);*/
+                    localStorage.setItem('accessToken', data.accessToken);
+                    window.location.href = '/home/index'
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    // Handle error
+                }
             });
         });
+    });
     </script>
 
 

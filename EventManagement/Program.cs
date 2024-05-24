@@ -70,6 +70,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // make the session cookie essential
 });
 
+builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddControllers().AddJsonOptions(_ =>
