@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="../wwwroot/css/layoutevent-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="menu-icon" id="menuIcon"><i class="fas fa-bars"></i></div>
+            <div class="header-right">
+                <div class="add-icon" id="addIcon"><i class="fas fa-plus"></i></div>
+                <div class="profile-pic" id="profilePic"><i class="fas fa-user-circle"></i></div>
+            </div>
+        </div>
+    </header>
+    <aside class="sidebar" id="sidebar">
+        <nav class="nav">
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> Màn hình chính</a></li>
+                <li><a href="#"><i class="fas fa-calendar"></i> Lịch trình</a></li>
+                <li class="has-dropdown">
+                    <a href="#"><i class="fas fa-user"></i> Đã tham gia</a>
+                    <ul class="dropdown" id="joinedEvents">
+                        <!-- Example event list items -->
+                        <li><a href="#">Sự kiện 1</a></li>
+                        <li><a href="#">Sự kiện 2</a></li>
+                        <li><a href="#">Sự kiện 3</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fas fa-archive"></i> Kho lưu trữ</a></li>
+                <li><a href="#"><i class="fas fa-flag"></i> Sự kiện của bạn</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div>
+        @RenderBody()
+    </div>
+
+    <!-- Dropdown Menus -->
+    <div class="dropdown-menu" id="profileDropdown">
+        <a href="#">Manage Account</a>
+        <a href="#">Logout</a>
+    </div>
+
+    <div class="dropdown-menu" id="addDropdown">
+        <a href="#" id="joinEvent">Join Event</a>
+        <a href="#" id="createEvent">Create Event</a>
+    </div>
+
+    <!-- Modal Tham gia sự kiện -->
+    <div class="modal" id="joinEventModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Join Event</h2>
+            <input type="text" placeholder="Event ID">
+            <div class="modal-buttons">
+                <button class="cancel">Cancel</button>
+                <button class="confirm">Join</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tạo sự kiện -->
+    <div class="modal" id="createEventModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create New Event</h2>
+            <input type="text" placeholder="Event Name">
+            <input type="text" placeholder="Date">
+            <input type="text" placeholder="Location">
+            <textarea placeholder="Event Description"></textarea>
+            <div class="modal-buttons">
+                <button class="cancel">Cancel</button>
+                <button class="confirm">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../wwwroot/js/layoutevent-js.js"></script>
+</body>
+</html>
