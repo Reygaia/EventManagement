@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header">
+            <i class="fa-solid fa-circle-user"></i>    
+            <nav>
+                <ul>
+                    <li><a href="#">Tạo sự kiện</a></li>
+                    <li><a href="#">Tham gia sự kiện</a></li>
+                    <li><a href="#">Cài đặt</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="contai">
+        <div class="toolbar">
+            <nav class="toolbar-menu">
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Trang cá nhân</a></li>
+                    <li><a href="#">Lịch</a></li>
+                    <li><a href="#">Hỗ trợ</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="Event">
+            <div class="Event-focus">
+                <h1>Sự kiện của bạn</h1>
+                <div class="classroom">
+                    <div class="class-list">
+                        <div class="class">
+                            <div class="name">
+                                <h2>Tên sự kiện</h2>
+                            </div>
+                            <div class="infor">
+                                <h4>Người tạo</h4>
+                                <h4>Ngày tạo: </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="class-list">
+                        <div class="class">
+                            <div class="name">
+                                <h2>Tên sự kiện</h2>
+                            </div>
+                            <div class="infor">
+                                <h4>Người tạo</h4>
+                                <h4>Ngày tạo: </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="class-list">
+                        <div class="class">
+                            <div class="name">
+                                <h2>Tên sự kiện</h2>
+                            </div>
+                            <div class="infor">
+                                <h4>Người tạo</h4>
+                                <h4>Ngày tạo: </h4>
+                                <h5>Thông tin sự kiện</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="Event-propose">
+                <h1>
+                    Đề xuất
+                </h1>
+                <h2>Phân loại sự kiện</h2>
+                <div class="room">
+                    <img src="img1.jpg" alt="Hình mô tả sự kiện">
+                    <div class="in-event">
+                        <h2>Tên sự kiện</h2>
+                        <h3>Người tạo:</h3>
+                        <h3>Ngày tạo:</h3>
+                        <h3>Thông tin sự kiện</h3>
+                    </div>
+                </div>
+                <div class="room">
+                    <img src="img1.jpg" alt="Hình mô tả sự kiện">
+                    <div class="in-event">
+                        <h2>Tên sự kiện</h2>
+                        <h3>Người tạo:</h3>
+                        <h3>Ngày tạo:</h3>
+                        <h3>Thông tin sự kiện</h3>
+                    </div>
+                </div>
+                <h2>Phân loại sự kiện</h2>
+                <div class="room">
+                    <img src="img1.jpg" alt="Hình mô tả sự kiện">
+                    <div class="in-event">
+                        <h2>Tên sự kiện</h2>
+                        <h3>Người tạo:</h3>
+                        <h3>Ngày tạo:</h3>
+                        <h3>Thông tin sự kiện</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script>
+        // JavaScript code to add random background color to elements with class "class-list"
+        var classListItems = document.querySelectorAll('.name');
+    
+        classListItems.forEach(function(item) {
+            var randomColor = getRandomBrightColor();
+            item.style.backgroundColor = randomColor;
+        });
+    
+        function getRandomBrightColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            do {
+                color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+            } while (!isBrightColor(color));
+            return color;
+        }
+    
+        function isBrightColor(color) {
+            var hex = color.substring(1); // Loại bỏ dấu "#"
+            var r = parseInt(hex.substring(0, 2), 16);
+            var g = parseInt(hex.substring(2, 4), 16);
+            var b = parseInt(hex.substring(4, 6), 16);
+            var brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+            return brightness > 150; // Giá trị ngưỡng để xác định màu sáng tối
+        }
+    </script>
+</body>
+</html>
