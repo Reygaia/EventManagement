@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using Authorization;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -8,19 +9,37 @@ using System.Threading.Tasks;
 
 namespace Entity.Event
 {
-    public class EventRole : Enumeration<EventRole>
+    public class EventRole
     {
-        public EventRole(int value, string name) : base(value, name)
+        [BsonId]
+        public int Id { get; set; } = 0;
+        public string Name { get; set; } = "New Role";
+        //permission
+        public MessagePermissions MessagePermissions { get; set; } = MessagePermissions.None;
+        public TaskPermissions TaskPermissions { get; set; } = TaskPermissions.None;
+        public RolePermissions RolePermissions { get; set; } = RolePermissions.None;
+        public UserPermissions UserPermissions { get; set; } = UserPermissions.None;
+
+        // Toggle individual permissions methods
+        public void ToggleMessagePermission(MessagePermissions permission)
         {
+            MessagePermissions ^= permission;
         }
 
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
-        public string Name { get; set; } = "New Role";
-        public ObjectId eventId { get; set; }
-        //permission
+        public void ToggleTaskPermission(TaskPermissions permission)
+        {
+            TaskPermissions ^= permission;
+        }
+
+        public void ToggleRolePermission(RolePermissions permission)
+        {
+            RolePermissions ^= permission;
+        }
+         
+        public void ToggleUserPermission(UserPermissions permission)
+        {
+            UserPermissions ^= permission;
+        }
         //level of hierachy
-        //policy
     }
 }

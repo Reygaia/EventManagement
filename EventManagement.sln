@@ -15,7 +15,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{E5433211-C65C-40AD-BB08-790DBFC47922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorization\Authorization.csproj", "{F32305FF-BD77-46F8-82E2-0A1601600CD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission", "Authorization\Permission.csproj", "{F32305FF-BD77-46F8-82E2-0A1601600CD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptionsSetup", "OptionsSetup\OptionsSetup.csproj", "{7DA72768-1014-4B99-976D-9BFD5C03B6E0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E5433211-C65C-40AD-BB08-790DBFC47922} = {E5433211-C65C-40AD-BB08-790DBFC47922}
+		{F32305FF-BD77-46F8-82E2-0A1601600CD8} = {F32305FF-BD77-46F8-82E2-0A1601600CD8}
+		{F3A01AC9-BAB3-4945-8C51-8A547EBCAD51} = {F3A01AC9-BAB3-4945-8C51-8A547EBCAD51}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +46,10 @@ Global
 		{F32305FF-BD77-46F8-82E2-0A1601600CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F32305FF-BD77-46F8-82E2-0A1601600CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F32305FF-BD77-46F8-82E2-0A1601600CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DA72768-1014-4B99-976D-9BFD5C03B6E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA72768-1014-4B99-976D-9BFD5C03B6E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA72768-1014-4B99-976D-9BFD5C03B6E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA72768-1014-4B99-976D-9BFD5C03B6E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

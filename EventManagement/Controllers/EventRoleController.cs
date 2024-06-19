@@ -25,11 +25,7 @@ namespace EventManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                var temp = new EventRole
-                {
-                    Name = input.Name,
-                    eventId = ObjectId.Parse(input.eventId),
-                };
+                var temp = new EventRole(1, "cc");
                 return Ok(new
                 {
                     response = "Role created "
@@ -47,7 +43,7 @@ namespace EventManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                var temp = GetEventRole(id);
+                var temp = new EventRole(1,"cc");
                 temp.Name = input.Name;
                 /*
                  * custom policy and stuff
@@ -60,11 +56,5 @@ namespace EventManagement.Controllers
             });
         }
 
-        private EventRole GetEventRole(string id)
-        {
-            var idfinder = ObjectId.Parse(id);
-            var result = _unitOfWork.EventRoleRepository.Get(s => s.Id == idfinder).FirstOrDefault();
-            return result;
-        }
     }
 }

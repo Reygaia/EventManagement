@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\OptionsSetup\OptionsSetup.csproj" />
   </ItemGroup>
 
   <ItemGroup>

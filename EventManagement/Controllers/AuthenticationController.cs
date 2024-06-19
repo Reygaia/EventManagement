@@ -8,7 +8,9 @@ using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using OptionsSetup.Authentication;
 
 namespace EventManagement.Controllers
 {
@@ -20,18 +22,21 @@ namespace EventManagement.Controllers
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IJwtProvider _jwtProvider;
         /*       private readonly HttpClient _httpClient;*/
 
         public AuthenticationController(UserManager<ApplicationUser> userManager,
                                         RoleManager<ApplicationRole> roleManager,
                                         SignInManager<ApplicationUser> signInManager,
-                                        IHttpContextAccessor contextAccessor
+                                        IHttpContextAccessor contextAccessor,
+                                        IJwtProvider jwtProvider
                                         /*HttpClient httpClient*/)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _contextAccessor = contextAccessor;
+            _jwtProvider = jwtProvider;
             /*_httpClient = httpClient;*/
         }
 
@@ -110,41 +115,12 @@ namespace EventManagement.Controllers
                 /*if (user is null) */
                 if (result.Succeeded)
                 {
-                    var claims = new List<Claim>
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-                };
-                    var roles = await _userManager.GetRolesAsync(user);
-                    var roleClaims = roles.Select(C => new Claim(ClaimTypes.Role, C));
-                    claims.AddRange(roleClaims);
-
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("984925f60df9b037cff0e784dfc013f2984925f60df9b037cff0e784dfc013f2"));
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                    var expires = DateTime.Now.AddHours(72);
-
-                    var token = new JwtSecurityToken(
-                        issuer: "https://localhost:44364",
-                        audience: "https://localhost:44364",
-                        claims: claims,
-                        expires: expires,
-                        signingCredentials: creds
-                        );
-
-                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-                    /*_contextAccessor.HttpContext.Session.SetString("AccessToken", tokenString);
-                    var httpClient = new HttpClient();
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenString);*/
-
+                    var tokenString = _jwtProvider.GenerateToken(user);
                     _contextAccessor.HttpContext.Response.Cookies.Append("Bearer", tokenString, new CookieOptions
                     {
                         Expires = DateTime.Now.AddDays(7),
                         HttpOnly = true
                     });
-
                     return new LoginResponse
                     {
                         AccessToken = tokenString,
@@ -167,4 +143,8 @@ namespace EventManagement.Controllers
             }
         }
     }
+
+    /*var roles = await _userManager.GetRolesAsync(user);
+               var roleClaims = roles.Select(C => new Claim(ClaimTypes.Role, C));
+               claims.AddRange(roleClaims);*/
 }

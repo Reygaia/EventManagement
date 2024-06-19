@@ -9,10 +9,11 @@ namespace Entity.Event
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
-        public string EventName { get; set; }
+        public string EventName { get; set; } = string.Empty;
         public string OwnerId { get; set; }
         public int StaffCount { get; set; } = 0;
         public List<Phase> Phases { get; set; } = new List<Phase>();
+        public List<EventRole> Roles { get; set; } = new List<EventRole>();
         //preparation phase
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         //implement phase
