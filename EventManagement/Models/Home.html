@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+<header>
+    <div class="header">
+        <i class="fas fa-calendar-alt"></i>    
+        <nav>
+            <ul>
+                <li><a href="#">Create Event</a></li>
+                <li><a href="#">Join Event</a></li>
+                <li><a href="#" id="setting-link">Settings</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <div class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Calendar</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </nav>wư
+    </div>
+    <div class="main-content">
+        <div class="event">
+            <div class="event-list">
+                <div class="contai">
+                    <div class="Event">
+                        <div class="Event-focus">
+                            <h1>Sự kiện của bạn</h1>
+                            <div class="classroom">
+                                <div class="class-list">
+                                    <div class="class">
+                                        <div class="name">
+                                            <h2>Tên sự kiện</h2>
+                                        </div>
+                                        <div class="infor">
+                                            <h4>Người tạo</h4>
+                                            <h4>Ngày tạo: </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="class-list">
+                                    <div class="class">
+                                        <div class="name">
+                                            <h2>Tên sự kiện</h2>
+                                        </div>
+                                        <div class="infor">
+                                            <h4>Người tạo</h4>
+                                            <h4>Ngày tạo: </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="class-list">
+                                    <div class="class">
+                                        <div class="name">
+                                            <h2>Tên sự kiện</h2>
+                                        </div>
+                                        <div class="infor">
+                                            <h4>Người tạo</h4>
+                                            <h4>Ngày tạo: </h4>
+                                            <h5>Thông tin sự kiện</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Event-propose">
+                            <h1>
+                                Đề xuất
+                            </h1>
+                            <h2>Phân loại sự kiện</h2>
+                            <div class="room">
+                                <img src="img1.jpg" alt="Hình mô tả sự kiện">
+                                <div class="in-event">
+                                    <h2>Tên sự kiện</h2>
+                                    <h3>Người tạo:</h3>
+                                    <h3>Ngày tạo:</h3>
+                                    <h3>Thông tin sự kiện</h3>
+                                </div>
+                            </div>
+                            <div class="room">
+                                <img src="img1.jpg" alt="Hình mô tả sự kiện">
+                                <div class="in-event">
+                                    <h2>Tên sự kiện</h2>
+                                    <h3>Người tạo:</h3>
+                                    <h3>Ngày tạo:</h3>
+                                    <h3>Thông tin sự kiện</h3>
+                                </div>
+                            </div>
+                            <h2>Phân loại sự kiện</h2>
+                            <div class="room">
+                                <img src="img1.jpg" alt="Hình mô tả sự kiện">
+                                <div class="in-event">
+                                    <h2>Tên sự kiện</h2>
+                                    <h3>Người tạo:</h3>
+                                    <h3>Ngày tạo:</h3>
+                                    <h3>Thông tin sự kiện</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="settings-dropdown" class="hidden">
+            <h1>Settings</h1>
+            <ul>
+                <li><a href="#">Notification Preferences</a></li>
+                <li><a href="#">Account Settings</a></li>
+                <li><a href="#">Privacy Settings</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer></footer>
+<script>
+    // JavaScript code to add random background color to elements with class "class-list"
+    var classListItems = document.querySelectorAll('.name');
+
+    classListItems.forEach(function(item) {
+        var randomColor = getRandomBrightColor();
+        item.style.backgroundColor = randomColor;
+    });
+
+    function getRandomBrightColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        do {
+            color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+        } while (!isBrightColor(color));
+        return color;
+    }
+
+    function isBrightColor(color) {
+        var hex = color.substring(1); // Loại bỏ dấu "#"
+        var r = parseInt(hex.substring(0, 2), 16);
+        var g = parseInt(hex.substring(2, 4), 16);
+        var b = parseInt(hex.substring(4, 6), 16);
+        var brightness = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+        return brightness > 150; // Giá trị ngưỡng để xác định màu sáng tối
+    }
+</script>
+<script src="home.js"></script>
+</body>
+</html>

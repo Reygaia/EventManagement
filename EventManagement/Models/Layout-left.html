@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Options</title>
+<style>
+/* CSS cho các lựa chọn động */
+.hidden {
+    display: none;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="toolbar">
+        <nav class="toolbar-menu">
+            <ul id="menu-list">
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Trang cá nhân</a></li>
+                <li><a href="#">Lịch</a></li>
+                <li><a href="#">Hỗ trợ</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<!-- Định nghĩa các lựa chọn động -->
+<div class="hidden" id="dynamic-options">
+    <ul>
+        <li><a href="#">Lựa chọn 1</a></li>
+        <li><a href="#">Lựa chọn 2</a></li>
+        <li><a href="#">Lựa chọn 3</a></li>
+    </ul>
+</div>
+
+<script>
+// Lấy danh sách các thẻ li từ menu-list
+const menuItems = document.querySelectorAll('#menu-list li');
+
+// Lắng nghe sự kiện khi một thẻ li được bấm
+menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+        // Xóa bất kỳ lựa chọn động nào đã được thêm trước đó
+        const dynamicOptions = document.querySelector('#dynamic-options');
+        dynamicOptions.innerHTML = '';
+
+        // Tạo ra các lựa chọn mới tương ứng với thẻ li được bấm
+        switch (item.textContent.trim()) {
+            case 'Trang chủ':
+                break; // Không cần thêm lựa chọn cho Trang chủ
+            case 'Trang cá nhân':
+                dynamicOptions.innerHTML = `
+                    <ul>
+                        <li><a href="#">Lựa chọn cá nhân 1</a></li>
+                        <li><a href="#">Lựa chọn cá nhân 2</a></li>
+                    </ul>
+                `;
+                break;
+            case 'Lịch':
+                dynamicOptions.innerHTML = `
+                    <ul>
+                        <li><a href="#">Lựa chọn lịch 1</a></li>
+                        <li><a href="#">Lựa chọn lịch 2</a></li>
+                    </ul>
+                `;
+                break;
+            case 'Hỗ trợ':
+                dynamicOptions.innerHTML = `
+                    <ul>
+                        <li><a href="#">Lựa chọn hỗ trợ 1</a></li>
+                        <li><a href="#">Lựa chọn hỗ trợ 2</a></li>
+                    </ul>
+                `;
+                break;
+            default:
+                break;
+        }
+    });
+});
+</script>
+</body>
+</html>
