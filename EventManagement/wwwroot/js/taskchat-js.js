@@ -1,30 +1,39 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    const tasks = document.querySelectorAll('.task');
     const chatMessages = document.getElementById('chat-messages');
     const chatTitle = document.getElementById('chat-title');
     const messageInput = document.getElementById('message-input');
     const sendMessageBtn = document.getElementById('send-message-btn');
+    const taskList = document.getElementById('task-list');
+
+    const contextMenu = document.getElementById('context-menu');
+    const channelContextMenu = document.getElementById('channel-context-menu');
+    const categoryContextMenu = document.getElementById('category-context-menu');
+
+    const createChannelBtn = document.getElementById('create-channel-btn');
+    const createCategoryBtn = document.getElementById('create-category-btn');
+    const deleteChannelBtn = document.getElementById('delete-channel-btn');
+    const createChannelInCategoryBtn = document.getElementById('create-channel-in-category-btn');
+    const deleteCategoryBtn = document.getElementById('delete-category-btn');
+
+    let selectedTaskElement = null;
+    let selectedCategoryElement = null;
 
     const chats = {
-        task1: [
-            { username: 'User1', message: 'Completed the proposal draft.' },
-            { username: 'User2', message: 'Great! I will review it.' },
-        ],
-        task2: [
-            { username: 'User3', message: 'Reviewed the codebase, found some issues.' },
-            { username: 'User4', message: 'Please share the details.' },
-        ],
-        task3: [
-            { username: 'User5', message: 'Started designing the new feature.' },
-            { username: 'User6', message: 'Looking forward to seeing it.' },
-        ],
-        task4: [
-            { username: 'User7', message: 'Writing unit tests for the new module.' },
-            { username: 'User8', message: 'Ensure to cover edge cases.' },
-        ],
+
     };
 
-    tasks.forEach(task => {
+    const loadTasks = () => {
+        for (const taskId in chats) {
+            const taskElement = document.createElement('div');
+            taskElement.classList.add('task');
+            taskElement.setAttribute('data-task', taskId);
+            taskElement.textContent = `Task ${taskId.slice(-1)}: ${taskId}`;
+            addTaskListeners(taskElement);
+            taskList.appendChild(taskElement);
+        }
+    };
+
+    const addTaskListeners = (task) => {
         task.addEventListener('click', function () {
             const taskId = this.getAttribute('data-task');
             const chatData = chats[taskId];
@@ -40,7 +49,58 @@
                 });
             }
         });
+
+        task.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            hideAllContextMenus();
+            selectedTaskElement = this;
+            selectedCategoryElement = null;
+            channelContextMenu.style.top = `${e.pageY}px`;
+            channelContextMenu.style.left = `${e.pageX}px`;
+            channelContextMenu.style.display = 'block';
+        });
+    };
+
+    const addCategoryListeners = (category) => {
+        category.addEventListener('click', function () {
+            const tasksInCategory = this.nextElementSibling;
+            if (tasksInCategory && tasksInCategory.classList.contains('category-tasks')) {
+                tasksInCategory.style.display = tasksInCategory.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+
+        category.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            hideAllContextMenus();
+            selectedCategoryElement = this;
+            selectedTaskElement = null;
+            categoryContextMenu.style.top = `${e.pageY}px`;
+            categoryContextMenu.style.left = `${e.pageX}px`;
+            categoryContextMenu.style.display = 'block';
+        });
+    };
+
+    taskList.addEventListener('contextmenu', function (e) {
+        if (e.target === taskList) {
+            e.preventDefault();
+            hideAllContextMenus();
+            selectedTaskElement = null;
+            selectedCategoryElement = null;
+            contextMenu.style.top = `${e.pageY}px`;
+            contextMenu.style.left = `${e.pageX}px`;
+            contextMenu.style.display = 'block';
+        }
     });
+
+    document.addEventListener('click', function () {
+        hideAllContextMenus();
+    });
+
+    const hideAllContextMenus = () => {
+        contextMenu.style.display = 'none';
+        channelContextMenu.style.display = 'none';
+        categoryContextMenu.style.display = 'none';
+    };
 
     const sendMessage = () => {
         const message = messageInput.value.trim();
@@ -60,4 +120,72 @@
             sendMessage();
         }
     });
+
+    createChannelBtn.addEventListener('click', function () {
+        const channelName = prompt('Enter the name of the new channel:');
+        if (channelName) {
+            const newTask = document.createElement('div');
+            newTask.classList.add('task');
+            newTask.setAttribute('data-task', `task${Object.keys(chats).length + 1}`);
+            newTask.textContent = channelName;
+            taskList.appendChild(newTask);
+
+            chats[`task${Object.keys(chats).length + 1}`] = [];
+            addTaskListeners(newTask);
+        }
+    });
+
+    createCategoryBtn.addEventListener('click', function () {
+        const categoryName = prompt('Enter the name of the new category:');
+        if (categoryName) {
+            const newCategory = document.createElement('div');
+            newCategory.classList.add('category');
+            newCategory.textContent = categoryName;
+            taskList.appendChild(newCategory);
+
+            const tasksInCategory = document.createElement('div');
+            tasksInCategory.classList.add('category-tasks');
+            tasksInCategory.style.display = 'none';
+            taskList.appendChild(tasksInCategory);
+
+            addCategoryListeners(newCategory);
+        }
+    });
+
+    deleteChannelBtn.addEventListener('click', function () {
+        if (selectedTaskElement) {
+            const taskId = selectedTaskElement.getAttribute('data-task');
+            delete chats[taskId];
+            selectedTaskElement.remove();
+            selectedTaskElement = null;
+            chatTitle.textContent = 'Select a task to chat';
+            chatMessages.innerHTML = '';
+        }
+    });
+
+    createChannelInCategoryBtn.addEventListener('click', function () {
+        if (selectedCategoryElement) {
+            const channelName = prompt('Enter the name of the new channel:');
+            if (channelName) {
+                const newTask = document.createElement('div');
+                newTask.classList.add('task');
+                newTask.setAttribute('data-task', `task${Object.keys(chats).length + 1}`);
+                newTask.textContent = channelName;
+                selectedCategoryElement.nextElementSibling.appendChild(newTask);
+
+                chats[`task${Object.keys(chats).length + 1}`] = [];
+                addTaskListeners(newTask);
+            }
+        }
+    });
+
+    deleteCategoryBtn.addEventListener('click', function () {
+        if (selectedCategoryElement) {
+            selectedCategoryElement.nextElementSibling.remove();
+            selectedCategoryElement.remove();
+            selectedCategoryElement = null;
+        }
+    });
+
+    loadTasks();
 });

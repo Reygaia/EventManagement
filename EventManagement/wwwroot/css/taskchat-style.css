@@ -16,15 +16,15 @@ body {
 
 .container {
     display: flex;
-    width: 90%;
-    height: 80vh;
+    width: 75%;
+    height: 90vh;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .tasks {
-    width: 70%;
+    width: 30%;
     background-color: #FFF;
     display: flex;
     flex-direction: column;
@@ -32,7 +32,7 @@ body {
 }
 
 .task-header {
-    padding: 15.5px;
+    padding: 15.6px;
     border-bottom: 1px solid #DDD;
     background-color: #F7F7F7;
 }
@@ -43,21 +43,42 @@ body {
     overflow-y: auto;
 }
 
-.task {
+.task, .category {
     padding: 15px;
-    background-color: #F9F9F9;
     margin-bottom: 10px;
     border-radius: 5px;
     cursor: pointer;
     border: 1px solid #E0E0E0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.task {
+    background-color: #F9F9F9;
 }
 
     .task:hover {
         background-color: #E0E0E0;
     }
 
+.category {
+    background-color: transparent;
+    font-weight: bold;
+    border: none;
+}
+
+    .category:hover {
+        background-color: #F0F0F0;
+    }
+
+.category-tasks {
+    margin-left: 20px;
+}
+
 .chat {
-    width: 30%;
+    width: 70%;
     background-color: #FFF;
     display: flex;
     flex-direction: column;
@@ -120,4 +141,28 @@ body {
 
         .chat-input button:hover {
             background-color: #0056b3;
+        }
+
+.context-menu {
+    position: absolute;
+    display: none;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+    .context-menu button {
+        display: block;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        background: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+        .context-menu button:hover {
+            background-color: #EEE;
         }
