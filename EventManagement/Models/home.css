@@ -11,243 +11,34 @@ body {
     background-color: #f4f4f4;
 }
 
-/* Header styles */
-.header {
+.container{
+    position: absolute;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-}
-
-.header i {
-    font-size: 24px;
-}
-
-.header nav ul {
-    list-style-type: none;
-}
-
-.header nav ul li {
-    display: inline;
-    margin-right: 20px;
-}
-
-.header nav ul li:last-child {
-    margin-right: 0;
-}
-
-.header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Container styles */
-.container {
-    display: flex;
-}
-
-/* Sidebar styles */
-.sidebar {
-    width: 350px;
-    background-color: #fff;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    font-size: 20px;
-    height: 2000px;
-
-}
-
-.sidebar nav ul li {
-    padding: 15px;
-    list-style: none;
-    border-bottom: 1px solid #333;
-}
-
-.sidebar nav ul li a {
-    color: #333;
-    text-decoration: none;
-}
-
-.sidebar nav ul li.active a {
-    background-color: #4CAF50; /* Màu nền của thẻ li khi được chọn */
-}
-
-.sidebar nav ul li a:hover {
-    background-color: #2E8B57; /* Màu nền của thẻ li khi hover */
-}
-/* Main content styles */
-.main-content {
-    flex-grow: 1;
-    padding: 20px;
-}
-
-/* Event styles */
-.event h1 {
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.event-list {
-    display: flex;
+    width: 1050px;
+    top: 110px;
+    right: 0px;
     flex-wrap: wrap;
 }
-
-.event-item {
-    width: calc(33.33% - 20px);
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Settings dropdown styles */
-#settings-dropdown {
-    display: none;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-#settings-dropdown h1 {
-    margin-bottom: 20px;
-    color: #333;
-}
-
-#settings-dropdown ul {
-    list-style-type: none;
-}
-
-#settings-dropdown ul li {
+.container h1{
+    height: 60px;
+    width: 1000px;
+    border-bottom: 1px solid #383838;
     margin-bottom: 10px;
 }
-
-#settings-dropdown ul li a {
-    color: #333;
-    text-decoration: none;
-}
-
-/* Hide class */
-.hidden {
-    display: none;
-}
-.contai{
-    display: flex;
-}
-/* Toolbar */
-.toolbar {
-    width: 350px;
+.event-card {
     background-color: #fff;
-    color: #000;
-    border-right: 2px solid #000;
-    padding: 20px;
-}
-
-.toolbar-menu {
-    width: 100%;
-}
-
-.toolbar-menu ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.toolbar-menu ul li {
-    font-size: 20px;
-    margin-bottom: 30px;
-    display: block;
-    padding: 5px 10px;
-}
-
-.toolbar-menu ul li a {
-    color: #000;
-    text-decoration: none;
-}
-
-.Event-focus h1{
-    margin: 20px 0px 0px 20px;
-}
-.Event-propose h1{
-   margin-left: 20px;
-}
-.Event-propose h2{
-    margin-left: 40px;
-    margin-top: 20PX;
-}
-.Event-propose h3{
-    margin-left: 40px;
-    margin-top: 20PX;
-}
-.Event-propose img{
-    height: 200px;
-    width: auto;
-    margin-top: 10px;
-    margin-left: 40px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-}
-.Event-propose .room{
-    display: flex;
-}
-.classroom {
-    display: flex;
-    margin: 0 auto;
-    padding: 20px 0;
-    flex-direction:row-reverse;
-}
-
-.classroom h1 {
-    text-align: center;
-}
-
-.class-list {
-    margin-left: 50px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-
-.class {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
     width: 300px;
-    height: 250px;
-    background-color: #ffffff;
-
+    margin-bottom: 20px;
+    margin-right: 50px;
 }
-.class .name{
-    height: 80px;
-    padding-top: 20px;
-    padding-left: 10px;
-    border-radius: 11px 10px 0px 0px;
-    border-top: 1px #535353 solid;
-    border-left: 1px #000 solid;
-    border-right: 1px #000 solid;
+.event-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
 }
-.class .infor{
-    border-left: 1px #000 solid;
-    border-right: 1px #000 solid;
-    border-bottom: 1px #000 solid;
-    border-radius: 0px 0px 10px 10px;
-    height: 170px;
-    padding-top: 10px;
-    padding-left: 10px;
-}
-.class .infor h4{
-    padding-top: 10px;
-}
-.class .infor h5{
-    padding-top: 10px;
-}
-.class p {
-    margin: 5px 0;
-}
-/* Footer */
-footer {
-    background-color: #444;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
+.event-info {
+    margin-top: 10px;
 }
