@@ -12,11 +12,33 @@
       <img src="img1.jpg" alt="Profile Picture">
     </div>
     <div class="profile-info">
-      <h1>John Doe</h1>
-      <p>Age: 30</p>
-      <p>Location: New York, USA</p>
-      <p>Email: john.doe@example.com</p>
+      <h1 class="only">Tên sụ kiện</h1>
+      <div class="eve-cre">
+        <h1>Nguòi tổ chúc:</h1>
+        <h1>Thòi gian tổ chúc:</h1>
+      </div>
+      <div class="eve-pro">
+        <h1>Thông tin sụ kiện:</h1>
+        <h2>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddddaaaaaaaaâ
+        </h2>
+      </div>
+    </div>
+  <div class="ok">
+    <button class="button-agree" onclick="showPopup()">Tham gia</button>
+    <div id="popup" class="popup">
+      <button class="close-btn" onclick="closePopup()">Đóng</button>
+      <p>Bạn đã tham gia</p>
     </div>
   </div>
+  </div>
 </body>
+<script>
+  function showPopup() {
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>
 </html>
