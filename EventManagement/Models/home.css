@@ -1,0 +1,44 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #f4f4f4;
+}
+
+.container{
+    position: absolute;
+    display: flex;
+    width: 1050px;
+    top: 110px;
+    right: 0px;
+    flex-wrap: wrap;
+}
+.container h1{
+    height: 60px;
+    width: 1000px;
+    border-bottom: 1px solid #383838;
+    margin-bottom: 10px;
+}
+.event-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px;
+    width: 300px;
+    margin-bottom: 20px;
+    margin-right: 50px;
+}
+.event-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+}
+.event-info {
+    margin-top: 10px;
+}
