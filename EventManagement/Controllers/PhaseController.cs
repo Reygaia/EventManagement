@@ -1,6 +1,7 @@
 ﻿using DAL;
 using Entity.Chat;
 using EventManagement.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 
@@ -19,6 +20,7 @@ namespace EventManagement.Controllers
 
         [HttpPost]
         [Route("create")]
+        [Authorize(Policy = "CreateRolePolicy")]
         public async Task<IActionResult> CreatePhase([FromBody] PhaseDTO phaseDto)
         {
             if (!ModelState.IsValid)

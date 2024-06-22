@@ -1,15 +1,22 @@
 using AspNetCore.Identity.MongoDbCore.Extensions;
 using AspNetCore.Identity.MongoDbCore.Infrastructure;
+using Authorization;
 using DAL;
 using Entity.Identity;
 using Entity.Task;
 using EventManagement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using OptionsSetup.Authentication;
+using OptionsSetup.Policy;
+using Permission;
+using System.Configuration;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -70,6 +77,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // make the session cookie essential
 });
 
+builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddControllers().AddJsonOptions(_ =>
@@ -85,9 +93,26 @@ builder.Services.ConfigureMongoDbIdentity<ApplicationUser, ApplicationRole, Guid
     .AddDefaultTokenProviders();
 
 
+
+
 //setup authentication
 //jwt bearer, jwt token checker (change to another file later and revamp proper setup option with appsettings.json) 
 //use cookie to store and check token data
+
+// Bind JwtOptions from configuration
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+// Register JwtBearerOptionsSetup
+builder.Services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, JwtBearerOptionsSetup>();
+// Register the JwtProvider service
+builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
+
+builder.Services.AddAuthorization(options =>
+{
+    AuthorizationPolicies.AddAuthorizationPolicies(options);
+});
+
+builder.Services.AddSingleton<IAuthorizationHandler, MultiplePoliciesHandler>();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -101,17 +126,6 @@ builder.Services.AddAuthentication(options =>
 {
     options.RequireHttpsMetadata = true;
     options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidIssuer = "https://localhost:44364",
-        ValidAudience = "https://localhost:44364",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("984925f60df9b037cff0e784dfc013f2984925f60df9b037cff0e784dfc013f2")),
-        ClockSkew = TimeSpan.Zero,
-    };
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
