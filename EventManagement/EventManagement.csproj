@@ -26,4 +26,14 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\css\footer-style.css" />
+    <None Include="wwwroot\css\header.css" />
+    <None Include="wwwroot\css\home.css" />
+    <None Include="wwwroot\css\Layout-left.css" />
+    <None Include="wwwroot\css\Layout.css" />
+    <None Include="wwwroot\css\profile.css" />
+    <None Include="wwwroot\css\Taskbar.css" />
+  </ItemGroup>
+
 </Project>
