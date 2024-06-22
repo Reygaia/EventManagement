@@ -26,7 +26,7 @@ namespace EventManagement.Controllers
 
         [HttpPost]
         [Route("tasktestadd")]
-        [Authorize]
+        [Authorize(Policy = "TaskManagePolicy")]
         public async Task<IActionResult> AddTestTasks()
         {
             try

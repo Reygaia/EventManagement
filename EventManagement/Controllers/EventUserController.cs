@@ -21,7 +21,7 @@ namespace EventManagement.Controllers
 
         [HttpPut]
         [Route("editRole/{eventid}/{userid}")]
-        //[Authorize(Policy = "EditUserRolePolicy")]
+        [Authorize(Policy = "EditRolePolicy")]
         public async Task<IActionResult> EditRole([FromBody]EventUserDTO input,string eventid, string userid)
         {
             var Event = GetEvent(eventid);

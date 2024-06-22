@@ -19,7 +19,7 @@ namespace EventManagement.Controllers
         }
         [HttpPost]
         [Route("create/{eventid}")]
-        [Authorize]
+        [Authorize(Policy = "CreateRolePolicy")]
         public async Task<IActionResult> CreateRole([FromBody] EventRoleDTO input, string eventid)
         {
             if (ModelState.IsValid)

@@ -23,7 +23,7 @@ namespace EventManagement.Controllers
 
         [HttpPost]
         [Route("create")]
-        [Authorize]
+        [Authorize(Policy = "SendMessagePolicy")]
         public async Task<IActionResult> CreateEvent([FromBody] EventDTO input)
         {
             string userid = GetUserId();
