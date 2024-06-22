@@ -53,7 +53,7 @@ namespace EventManagement.Controllers
         {
             return View();
         }
-        [HttpPost]
+        /*[HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login1(string Email, string Password) 
         {
@@ -151,7 +151,7 @@ namespace EventManagement.Controllers
                 ModelState.AddModelError(string.Empty, "Login failed. Please try again.");
                 return View();
             }
-        }
+        }*/
 
 
         public IActionResult UserCheck()

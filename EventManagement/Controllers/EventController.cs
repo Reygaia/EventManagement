@@ -23,14 +23,15 @@ namespace EventManagement.Controllers
 
         [HttpPost]
         [Route("create")]
-        [Authorize(Roles = "User")]
-        public async Task<IActionResult> CreateEvents([FromBody] EventDTO input)
+        [Authorize]
+        public async Task<IActionResult> CreateEvent([FromBody] EventDTO input)
         {
             string userid = GetUserId();
 
             if (ModelState.IsValid)
             {
                 Event temp = CreateEvent(input, userid);
+                temp.Users.Add(GetEventUser(userid));
                 _unitOfWork.EventRepository.Insert(temp);
             }
             return Ok(new { message = "Event created with some tasks" });
@@ -41,7 +42,7 @@ namespace EventManagement.Controllers
         [Authorize(Roles = "User")]
         public async Task<IActionResult> DeleteEvent(string id)
         {
-            var result = FindEvent(id);
+            var result = GetEvent(id);
             if (result.OwnerId == GetUserId())
             {
                 _unitOfWork.EventRepository.Delete(result.Id);
@@ -62,7 +63,7 @@ namespace EventManagement.Controllers
         [Authorize(Roles = "User")]
         public async Task<IActionResult> EditEvent(string id, [FromBody] EventDTO input)
         {
-            var result = FindEvent(id);
+            var result = GetEvent(id);
             if (result.OwnerId == GetUserId())
             {
                 UpdateEvent(input, result);
@@ -82,7 +83,7 @@ namespace EventManagement.Controllers
         [Authorize(Roles = "User")]
         public async Task<IActionResult> ChangeOwner(string id, [FromBody]string ownerId)
         {
-            var result = FindEvent(id);
+            var result = GetEvent(id);
             
             if(result.OwnerId == GetUserId())
             {
@@ -100,6 +101,21 @@ namespace EventManagement.Controllers
                 response = "You are not owner"
             });
         }
+
+        [HttpDelete]
+        [Route("leave/{eventid}")]
+        [Authorize]
+        public async Task<IActionResult> LeaveEvent(string eventid)
+        {
+            var UserId = GetUserId();
+            var Event = GetEvent(eventid);
+            Event.Users.Remove(GetEventUser(UserId));
+            _unitOfWork.EventRepository.Update(Event);
+            return Ok();
+        }
+
+
+
 
         private void UpdateEvent(EventDTO input, Event result)
         {
@@ -125,10 +141,11 @@ namespace EventManagement.Controllers
                 CreatedDate = input.CreatedDate,
                 StartDate = input.StartDate,
                 EndDate = input.EndDate,
+                Roles = input.Roles
             };
         }
 
-        private Event FindEvent(string id)
+        private Event GetEvent(string id)
         {
             var idfinder = ObjectId.Parse(id);
             var result = _unitOfWork.EventRepository.Get(s => s.Id == idfinder).FirstOrDefault();
@@ -141,5 +158,19 @@ namespace EventManagement.Controllers
             string userid = user.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
             return userid;
         }
+
+        private EventUser GetEventUser(string userId)
+        {
+            var idFinder = Guid.Parse(userId);
+            var user = _unitOfWork.UserRepository.Get(s => s.Id == idFinder).FirstOrDefault();
+            var returnUser = new EventUser
+            {
+                UserId = user.Id,
+                NickName = user.UserName,
+            };
+            return returnUser;
+        }
+
+        
     }
 }

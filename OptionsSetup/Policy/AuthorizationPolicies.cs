@@ -52,6 +52,9 @@ namespace OptionsSetup.Policy
             options.AddPolicy("RoleManagePolicy", policy =>
                 policy.RequireClaim("permissions", RolePermissions.RoleManage.ToString()));
 
+            options.AddPolicy("AnyEditOrManageRole", policy =>
+                policy.Requirements.Add(new MultiplePoliciesRequirement("EditRolePolicy", "RoleManagePolicy")));
+
             // UserPermissions policies
             options.AddPolicy("EditUserRolePolicy", policy =>
                 policy.RequireClaim("permissions", UserPermissions.EditUserRole.ToString()));

@@ -3,14 +3,15 @@ using EventManagement.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using OptionsSetup.Authentication;
 using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using OptionsSetup.Authentication;
+using Permission;
+using Authorization;
+using DAL;
+using MongoDB.Bson;
+using Entity.Event;
 
 namespace EventManagement.Controllers
 {
@@ -21,6 +22,7 @@ namespace EventManagement.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UnitOfWork _unitOfWork;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly IJwtProvider _jwtProvider;
         /*       private readonly HttpClient _httpClient;*/
@@ -29,7 +31,8 @@ namespace EventManagement.Controllers
                                         RoleManager<ApplicationRole> roleManager,
                                         SignInManager<ApplicationUser> signInManager,
                                         IHttpContextAccessor contextAccessor,
-                                        IJwtProvider jwtProvider
+                                        IJwtProvider jwtProvider,
+                                        UnitOfWork unitOfWork
                                         /*HttpClient httpClient*/)
         {
             _userManager = userManager;
@@ -37,6 +40,7 @@ namespace EventManagement.Controllers
             _signInManager = signInManager;
             _contextAccessor = contextAccessor;
             _jwtProvider = jwtProvider;
+            _unitOfWork = unitOfWork;
             /*_httpClient = httpClient;*/
         }
 
@@ -142,9 +146,116 @@ namespace EventManagement.Controllers
                 return new LoginResponse { Success = false, Message = ex.Message };
             }
         }
-    }
 
-    /*var roles = await _userManager.GetRolesAsync(user);
-               var roleClaims = roles.Select(C => new Claim(ClaimTypes.Role, C));
-               claims.AddRange(roleClaims);*/
+
+        [HttpPut]
+        [Authorize]
+        [Route("token")]
+        public async Task<IActionResult> UpdateToken([FromBody] IEnumerable<string> claims)
+        {
+            var token = _contextAccessor.HttpContext.Request.Headers["Cookie"].ToString().Replace("Bearer=", string.Empty);
+            var newClaims = new List<Claim>();
+            foreach (var item in claims)
+            {
+                newClaims.Add(new Claim("permissions", item));
+            }
+            var newToken = _jwtProvider.UpdateToken(token, newClaims);
+            Response.Cookies.Append("Bearer", newToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
+            });
+            return Ok(newToken);
+        }
+
+
+        [HttpGet]
+        [Route("roleClaims/{eventid}/{userid}")]
+        public async Task<RoleClaimResponse> GetCurrentUserRoles(string eventId, string userId)
+        {
+            var eventUser = GetEventUser(eventId, userId);
+
+            if (eventUser == null)
+            {
+                // Handle user not found
+                return null;
+            }
+
+            var claims = new List<SimpleClaim>();
+            foreach (var roleId in eventUser.RolesId)
+            {
+                var role = GetRoleById(eventId, roleId);
+                if (role != null)
+                {
+                    claims.AddRange(CreateClaimsFromPermissions<MessagePermissions>((int)role.MessagePermissions));
+                    claims.AddRange(CreateClaimsFromPermissions<TaskPermissions>((int)role.TaskPermissions));
+                    claims.AddRange(CreateClaimsFromPermissions<RolePermissions>((int)role.RolePermissions));
+                    claims.AddRange(CreateClaimsFromPermissions<UserPermissions>((int)role.UserPermissions));
+                }
+            }
+
+            return new RoleClaimResponse
+            {
+                Claims = claims,
+            };
+        }
+
+        private List<SimpleClaim> CreateClaimsFromPermissions<TEnum>(int permissions) where TEnum : Enum
+        {
+            var claims = new List<SimpleClaim>();
+
+            foreach (TEnum permission in Enum.GetValues(typeof(TEnum)))
+            {
+                int permissionValue = Convert.ToInt32(permission);
+                if ((permissions & permissionValue) != 0 && permissionValue != 0)
+                {
+                    claims.Add(new SimpleClaim
+                    {
+                        Type = "permissions",
+                        Value = permission.ToString()
+                    });
+                }
+            }
+
+            return claims;
+        }
+
+        private EventRole GetRoleById(string eventId, int roleId)
+        {
+            var eventEntity = GetEvent(eventId);
+            return eventEntity?.Roles.FirstOrDefault(r => r.Id == roleId);
+        }
+
+        // Example implementations of GetEvent and GetEventUser
+        private Event GetEvent(string eventId)
+        {
+            var idfinder = ObjectId.Parse(eventId);
+            var result = _unitOfWork.EventRepository.Get(s => s.Id == idfinder).FirstOrDefault();
+            return result;
+        }
+
+        private EventUser GetEventUser(string eventId, string userId)
+        {
+            var eventEntity = GetEvent(eventId);
+            var idFinder = Guid.Parse(userId);
+            return eventEntity?.Users.FirstOrDefault(u => u.UserId == idFinder);
+        }
+
+
+        [HttpGet]
+        [Authorize(Policy = "ReadMessagePolicy")]
+        [Route("Check")]
+        public async Task<IActionResult> CheckPerm()
+        {
+            return Ok(new
+            {
+                message = "access accepted"
+            });
+        }
+
+        /*var roles = await _userManager.GetRolesAsync(user);
+          var roleClaims = roles.Select(C => new Claim(ClaimTypes.Role, C));
+          claims.AddRange(roleClaims);*/
+    }
 }

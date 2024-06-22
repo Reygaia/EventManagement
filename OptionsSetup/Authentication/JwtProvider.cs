@@ -48,5 +48,30 @@ namespace OptionsSetup.Authentication
 
             return tokenValue;
         }
+
+        public string UpdateToken(string existingToken, IEnumerable<Claim> newClaims)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var token = handler.ReadJwtToken(existingToken);
+
+            var existingClaims = token.Claims.ToList();
+
+            // Add new claims
+            existingClaims.AddRange(newClaims);
+
+            var signingCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),
+                SecurityAlgorithms.HmacSha256);
+
+            var newToken = new JwtSecurityToken(
+                _options.Issuer,
+                _options.Audience,
+                existingClaims,
+                token.ValidFrom,
+                token.ValidTo,
+                signingCredentials);
+
+            return handler.WriteToken(newToken);
+        }
     }
 }

@@ -6,6 +6,7 @@ using Entity.Identity;
 using Entity.Task;
 using EventManagement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -109,6 +110,8 @@ builder.Services.AddAuthorization(options =>
 {
     AuthorizationPolicies.AddAuthorizationPolicies(options);
 });
+
+builder.Services.AddSingleton<IAuthorizationHandler, MultiplePoliciesHandler>();
 
 builder.Services.AddAuthentication(options =>
 {

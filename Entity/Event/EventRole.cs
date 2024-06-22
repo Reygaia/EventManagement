@@ -14,6 +14,7 @@ namespace Entity.Event
         [BsonId]
         public int Id { get; set; } = 0;
         public string Name { get; set; } = "New Role";
+        public List<Guid>? userIds { get; set; } = new List<Guid>();
         //permission
         public MessagePermissions MessagePermissions { get; set; } = MessagePermissions.None;
         public TaskPermissions TaskPermissions { get; set; } = TaskPermissions.None;
