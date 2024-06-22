@@ -25,7 +25,7 @@ namespace EventManagement.Controllers
 
         [HttpPost]
         [Route("create")]
-        [Authorize]
+        [Authorize(Policy = "SendMessagePolicy")]
         public async Task<IActionResult> SendMessage([FromBody] MessageDTO message)
         {
             if (ModelState.IsValid)
