@@ -3,31 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task & Chat</title>
-    <link rel="stylesheet" href="../wwwroot/css/taskchat-style.css">
+    <title>Giao diện Task</title>
+    <link rel="stylesheet" href="taskchat-style.css">
 </head>
 <body>
     <div class="container">
         <div class="tasks">
             <div class="task-header">
-                <h2>Tasks</h2>
+                <h2>Kênh</h2>
             </div>
-            <div class="task-list">
-                <div class="task" data-task="task1">Task 1: Complete the project proposal</div>
-                <div class="task" data-task="task2">Task 2: Review the codebase</div>
-                <div class="task" data-task="task3">Task 3: Design the new feature</div>
-                <div class="task" data-task="task4">Task 4: Write unit tests</div>
-            </div>
+            <div id="task-list" class="task-list"></div>
         </div>
         <div class="chat">
-            <div class="chat-header" id="chat-title">Select a task to chat</div>
+            <div class="chat-header" id="chat-title">Chọn kênh để trò chuyện</div>
             <div class="chat-messages" id="chat-messages"></div>
             <div class="chat-input">
                 <input type="text" id="message-input" placeholder="Type your message...">
-                <button id="send-message-btn">Send</button>
+                <button id="send-message-btn">Gửi</button>
             </div>
         </div>
     </div>
-    <script src="../wwwroot/js/taskchat-js.js"></script>
+    <div id="context-menu" class="context-menu">
+        <button id="create-channel-btn">Tạo kênh</button>
+        <button id="create-category-btn">Tạo danh mục</button>
+    </div>
+    <div id="channel-context-menu" class="context-menu">
+        <button id="delete-channel-btn">Xoá kênh</button>
+    </div>
+    <div id="category-context-menu" class="context-menu">
+        <button id="create-channel-in-category-btn">Tạo kênh</button>
+        <button id="delete-category-btn">Xoá danh mục</button>
+    </div>
+    <script src="taskchat-js.js"></script>
 </body>
 </html>

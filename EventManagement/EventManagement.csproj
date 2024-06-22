@@ -9,13 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Models\Login.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AspNetCore.Identity.MongoDbCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="MongoDB.Driver" Version="2.25.0" />
@@ -24,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
-    <ProjectReference Include="..\OptionsSetup\OptionsSetup.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Models\Login.cshtml" />
+    <None Include="wwwroot\css\footer-style.css" />
+    <None Include="wwwroot\css\header.css" />
+    <None Include="wwwroot\css\home.css" />
+    <None Include="wwwroot\css\Layout-left.css" />
+    <None Include="wwwroot\css\Layout.css" />
+    <None Include="wwwroot\css\profile.css" />
+    <None Include="wwwroot\css\Taskbar.css" />
   </ItemGroup>
 
 </Project>

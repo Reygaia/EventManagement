@@ -1,0 +1,116 @@
+body {
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .profile-card {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 1000px;
+    width: 100%;
+  }
+  
+  .profile-picture {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .profile-picture img {
+    max-width: 800px;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 15px;
+  }
+  
+  .profile-info {
+    flex: 2;
+    padding-left: 20px;
+    background-color: #dddddd;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 20px;
+  }
+  
+  .profile-info .only {
+    font-size: 34px;
+    margin-top: 0;
+    text-align: center;
+  }
+  
+  .profile-info p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+.eve-cre{
+  display: flex;
+  width: 950px;
+  border-top:solid #6e6e6e 1px ;
+}
+.eve-cre h1{
+  width: 50%;
+  word-wrap: break-word;
+  font-size: 20px;
+}
+.eve-pro{
+  border-top: solid #6e6e6e 1px;
+  width: 950px;
+}
+.eve-pro h2{
+  word-wrap: break-word;
+  font-size: 20px;
+}
+.ok{
+  text-align: center;
+}
+.button-agree {
+  background-color: #4CAF50; /* Màu nền */
+  color: white; /* Màu chữ */
+  padding: 15px 32px; /* Khoảng đệm */
+  text-align: center; /* Căn giữa văn bản */
+  text-decoration: none; /* Bỏ gạch chân */
+  display: inline-block; /* Hiển thị như một khối nội tuyến */
+  font-size: 16px; /* Kích thước chữ */
+  margin: 4px 2px; /* Khoảng cách xung quanh */
+  cursor: pointer; /* Hình con trỏ khi di chuột qua */
+  border: none; /* Bỏ viền */
+  border-radius: 4px; /* Bo tròn góc */
+}
+.popup {
+  text-align: center;
+  display: none; /* Ẩn popup */
+  position: fixed; /* Cố định vị trí */
+  top: 50%; /* Căn giữa theo chiều dọc */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translate(-50%, -50%); /* Điều chỉnh vị trí để căn giữa */
+  background-color: white; /* Màu nền */
+  padding: 20px; /* Khoảng đệm */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Đổ bóng */
+  border-radius: 8px; /* Bo tròn góc */
+  z-index: 1000; /* Đảm bảo popup nằm trên các phần tử khác */
+  height: 100px;
+  width: 200px;
+  font-size: 25px;
+}
+.popup .close-btn {
+  position: absolute;
+  right: 36%;
+  top: 90px;
+  background-color: #f44336; /* Màu nền nút đóng */
+  color: white; /* Màu chữ nút đóng */
+  padding: 10px 20px; /* Khoảng đệm nút đóng */
+  border: none; /* Bỏ viền */
+  cursor: pointer; /* Hình con trỏ khi di chuột qua */
+  border-radius: 4px; /* Bo tròn góc nút đóng */
+  float: right; /* Canh phải nút đóng */
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Page</title>
+<link rel="stylesheet" href="profile.css">
+</head>
+<body>
+  <div class="profile-card">
+    <div class="profile-picture">
+      <img src="img1.jpg" alt="Profile Picture">
+    </div>
+    <div class="profile-info">
+      <h1 class="only">Tên sự kiện</h1>
+      <div class="eve-cre">
+        <h1>Người tổ chức:</h1>
+        <h1>Thời gian tổ chức:</h1>
+      </div>
+      <div class="eve-pro">
+        <h1>Thông tin sự kiện:</h1>
+        <h2>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadddddddddddddddaaaaaaaaâ
+        </h2>
+      </div>
+    </div>
+  <div class="ok">
+    <button class="button-agree" onclick="showPopup()">Tham gia</button>
+    <div id="popup" class="popup">
+      <button class="close-btn" onclick="closePopup()">Đóng</button>
+      <p>Bạn đã tham gia</p>
+    </div>
+  </div>
+  </div>
+</body>
+<script>
+  function showPopup() {
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+    }
+</script>
+</html>

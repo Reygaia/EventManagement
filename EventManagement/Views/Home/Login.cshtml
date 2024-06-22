@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Login";
 }
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -18,7 +19,7 @@
             <div class="image">
                 <img src="../wwwroot/images/frieren1.jpg" alt="">
                 <div class="text">
-                    <span class="text-1">Every new friend is a <br> new adventure</span>
+                    <span class="text-1">Every new friend is a <br> new adventure</span>ưư
                     <span class="text-2">Let's get connected</span>
                 </div>
             </div>
@@ -27,7 +28,7 @@
             <div class="form-content">
                 <div class="login-form">
                     <div class="title"><h2>Login</h2></div>
-                    <form action="loginForm">
+                    <form id="loginForm" action="#">
                         <div class="input-boxes">
                             <div class="input-box">
                                 <i class="fas fa-envelope"></i>
@@ -52,32 +53,38 @@
 </html>
 
     <script>
-    $(document).ready(function () {
-        $('#loginForm').submit(function (event) {
-            event.preventDefault();
+        $(document).ready(function () {
+            $('#loginForm').submit(function (event) {
+                event.preventDefault();
 
-            var formData = {
-                email: $('#Email').val(),
-                password: $('#Password').val()
-            };
+                var formData = {
+                    email: $('#Email').val(),
+                    password: $('#Password').val()
+                };
 
-            $.ajax({
-                type: 'POST',
-                url: '/api/authenticate/login',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function (data) {
-                    /*console.log('Login Successful:', data);*/
-                    localStorage.setItem('accessToken', data.accessToken);
-                    window.location.href = '/home/index'
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error:', error);
-                    // Handle error
-                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/authenticate/login',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (data) {
+                        /*console.log('Login Successful:', data);*/
+                        localStorage.setItem('accessToken', data.accessToken);
+                        // Handle successful login
+                    $.ajaxSetup({
+                        headers: {
+                            'Authorization': 'Bearer ' + data.accessToken
+                        }
+                    });
+                        console.log("Login Successfully");
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                        // Handle error
+                    }
+                });
             });
         });
-    });
     </script>
 
 
